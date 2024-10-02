@@ -66,7 +66,7 @@ The format for your respoonse should be:
 
 Decision: [fraud/not_fraud/need_more_time]
 
-Reasoning: [reason for your decision]
+Reasoning: [reason for your decision] (Keep it very short and concise)
 
-Action: [what should the user do.]
+Action: [what should the user do.] (Should be strickly ONE line. First word should be 'Fraud!', if it is fraud.)
 '''

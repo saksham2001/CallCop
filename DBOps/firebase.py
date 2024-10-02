@@ -15,7 +15,7 @@ class FirebaseOps:
             logging.error(f"Error initializing Firebase: {str(e)}")
             raise
 
-    def update_data(self, data):
+    def add_data(self, data):
         if not isinstance(data, dict):
             raise ValueError("Data must be a dictionary")
         
@@ -25,3 +25,16 @@ class FirebaseOps:
         except Exception as e:
             logging.error(f"Error updating data in Firebase: {str(e)}")
             raise
+
+    def update_value(self, key, value):
+        if not isinstance(key, str):
+            raise ValueError("Key must be a string")
+        
+        try:
+            self.db_ref.child(key).set(value)
+            logging.info(f"Value for key '{key}' updated successfully in Firebase.")
+        except Exception as e:
+            logging.error(f"Error updating value for key '{key}' in Firebase: {str(e)}")
+            raise
+
+    

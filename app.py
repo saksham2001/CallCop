@@ -29,7 +29,7 @@ llm_handler = OpenAILLMHandler(openai_api_key)
 speech_to_text_handler = OpenAISpeechHandler(openai_api_key)
 
 # Create Firebase Handler
-firebase_handler = FirebaseOps(config['Firebase']['credentials_path'], config['Firebase']['database_url'], config['Firebase']['database_path'])
+firebase_handler = FirebaseOps(config['Firebase']['credentials_path'], config['Firebase']['database_url'])
 
 # create messages and insert system prompt
 messages = [
@@ -43,6 +43,8 @@ messages = [
         ]
     }
 ]
+
+i = 0
 
 def process_audio_file(audio_file_path):
     # Load the audio file
@@ -74,13 +76,14 @@ def process_audio_file(audio_file_path):
         )
 
         # Update Firebase with the LLM response
-        firebase_handler.update_data({
-            f"CallCop/chunks/{i+1}": {
-                "transcription": transcription,
-                "response": response_message,
-                "time": time.time()
-            }
-        })
+        # firebase_handler.add_data({
+        #     f"CallCop/chunks/{i+1}": {
+        #         "transcription": transcription,
+        #         "response": response_message,
+        #         "time": time.time()
+        #     }
+        # })
+        firebase_handler.update_value(key='Response', value=response_message)
         
         # Add LLM response to messages
         messages.append({"role": role, "content": response_message})
@@ -90,6 +93,10 @@ def process_audio_file(audio_file_path):
         print(f"LLM Response: {response_message}")
         print("----------------------------------")
         print()
+
+        if i==3:
+            break
+        i+=1
 
 # Use the MP3 file
 audio_file_path = "/Users/sakshambhutani/PycharmProjects/MachineLearning/Projects/GHack/CallCop_py/debt_collection.wav"
