@@ -1,5 +1,7 @@
 # CallCop
 
+Made by Saksham Bhutani, Shobhit Tulshain, Sakshi Parikh & P Ajay Venkatesh.
+
 CallCop is a project that aims to detect fraudulent phone calls using AI. It uses a combination of Twilio's API, Large Language Models, and Firebase's API to detect fraudulent phone calls.
 
 ## Description
@@ -35,4 +37,6 @@ The Flutter app is a mobile application.
 
 ## Installation
 
-## Usage
+1. Clone the repository
+2. Install the dependencies (flutter pub get)
+3. Run the app (flutter run)

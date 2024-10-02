@@ -44,8 +44,6 @@ messages = [
     }
 ]
 
-i = 0
-
 def process_audio_file(audio_file_path):
     # Load the audio file
     audio = AudioSegment.from_mp3(audio_file_path)
@@ -93,10 +91,6 @@ def process_audio_file(audio_file_path):
         print(f"LLM Response: {response_message}")
         print("----------------------------------")
         print()
-
-        if i==3:
-            break
-        i+=1
 
 # Use the MP3 file
 audio_file_path = "/Users/sakshambhutani/PycharmProjects/MachineLearning/Projects/GHack/CallCop_py/debt_collection.wav"
