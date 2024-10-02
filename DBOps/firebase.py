@@ -1,34 +1,27 @@
 import firebase_admin
 from firebase_admin import credentials, db
-import time
 import logging
 
-# Initialize the Firebase app
-
-
-# Reference to the Firebase database
-
 class FirebaseOps:
-    def __init__(self, credentials_path, database_url, database_path):
-        self.cred = credentials.Certificate(credentials_path)
-        self.firebase_admin.initialize_app(self.cred, {
-            'databaseURL': database_url
-        })
-        self.ref = db.reference(database_path)
+    def __init__(self, credential_path, database_url):
+        try:
+            cred = credentials.Certificate(credential_path)
+            firebase_admin.initialize_app(cred, {
+                'databaseURL': database_url
+            })
+            self.db_ref = db.reference()
+            logging.info("Firebase connection initialized successfully.")
+        except Exception as e:
+            logging.error(f"Error initializing Firebase: {str(e)}")
+            raise
 
     def update_data(self, data):
-        # send data to firebase
+        if not isinstance(data, dict):
+            raise ValueError("Data must be a dictionary")
+        
         try:
-            self.ref.set(data)
+            self.db_ref.update(data)
+            logging.info("Data updated successfully in Firebase.")
         except Exception as e:
-            logging.error(f"Error updating data: {e}")
-            return False
-        return True
-
-    def get_data(self, data):
-        # get data from firebase
-        try:
-            return self.ref.get(data)
-        except Exception as e:
-            logging.error(f"Error getting data: {e}")
-            return None 
+            logging.error(f"Error updating data in Firebase: {str(e)}")
+            raise

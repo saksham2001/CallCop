@@ -5,6 +5,7 @@ from LLMOps.OpenAI import OpenAILLMHandler, OpenAISpeechHandler
 from DBOps.firebase import FirebaseOps
 from prompt import system_prompt
 import io
+import time
 from pydub import AudioSegment
 
 # Set Log Level
@@ -76,7 +77,8 @@ def process_audio_file(audio_file_path):
         firebase_handler.update_data({
             f"CallCop/chunks/{i+1}": {
                 "transcription": transcription,
-                "response": response_message
+                "response": response_message,
+                "time": time.time()
             }
         })
         
